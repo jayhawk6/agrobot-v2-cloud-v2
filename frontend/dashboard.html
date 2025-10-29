@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrobot V2 Digital Twin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { background: #c8e6c9; font-family: 'Inter', sans-serif; }
+#farm { position: relative; width: 800px; height: 400px; margin: auto; border: 2px solid #4caf50; background-color: #a5d6a7; overflow: hidden; }
+
+.robot, .obstacle, .station {
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+}
+
+.robot { width: 40px; height: 40px; }
+.robot img { width: 100%; height: 100%; }
+
+.stats {
+  position: absolute;
+  top: -35px; left: -10px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.task-icon { font-size: 14px; position: absolute; top: -20px; left: 10px; }
+
+.station { width: 50px; height: 50px; background: url('https://i.imgur.com/6z7M3q5.png') no-repeat center/contain; }
+.obstacle { width: 30px; height: 30px; }
+.weather { position:absolute; top:0; left:0; width:800px; height:400px; pointer-events:none; }
+
+</style>
+</head>
+<body class="p-6">
+<h1 class="text-3xl font-bold text-green-800 text-center mb-4">🌾 Agrobot V2 Digital Twin</h1>
+<div id="farm"></div>
+
+<script>
+const farm = document.getElementById("farm");
+const robots = {};
+const obstacles = {};
+const stations = {};
+
+// Draw stations placeholder
+const stationPositions = [];
+const ws = new WebSocket("ws://127.0.0.1:8000/ws/telemetry");
+
+const weatherLayer = document.createElement("canvas");
+weatherLayer.className = "weather";
+weatherLayer.width = 800; weatherLayer.height = 400;
+farm.appendChild(weatherLayer);
+const wctx = weatherLayer.getContext("2d");
+
+function drawWeather(state) {
+  wctx.clearRect(0,0,800,400);
+  if(state==="clouds"){
+    wctx.fillStyle="rgba(255,255,255,0.5)";
+    for(let i=0;i<10;i++){
+      wctx.beginPath();
+      wctx.arc(Math.random()*800, Math.random()*400, 30+Math.random()*20,0,2*Math.PI);
+      wctx.fill();
+    }
+  }else if(state==="rain"){
+    wctx.strokeStyle="rgba(0,0,255,0.5)";
+    for(let i=0;i<100;i++){
+      wctx.beginPath();
+      wctx.moveTo(Math.random()*800, Math.random()*400);
+      wctx.lineTo(Math.random()*800, Math.random()*400+10);
+      wctx.stroke();
+    }
+  }
+}
+
+ws.onmessage = (event)=>{
+  const data = JSON.parse(event.data);
+  drawWeather(data.weather);
+
+  // Draw obstacles
+  data.obstacles.forEach((obs,i)=>{
+    if(!obstacles[i]){
+      const el = document.createElement("div");
+      el.className="obstacle";
+      el.style.backgroundImage="url('https://i.imgur.com/RZ7yC2y.png')";
+      el.style.backgroundSize="contain";
+      farm.appendChild(el);
+      obstacles[i]=el;
+    }
+    const o=obstacles[i];
+    o.style.left=obs.x+"px";
+    o.style.top=obs.y+"px";
+  });
+
+  // Draw stations
+  data.stations.forEach((s,i)=>{
+    if(!stations[i]){
+      const el=document.createElement("div");
+      el.className="station";
+      farm.appendChild(el);
+      stations[i]=el;
+    }
+    const st=stations[i];
+    st.style.left=s[0]+"px";
+    st.style.top=s[1]+"px";
+  });
+
+  // Draw robots
+  data.robots.forEach(bot=>{
+    if(!robots[bot.robot_id]){
+      const el=document.createElement("div");
+      el.className="robot";
+      const img=document.createElement("img");
+      img.src="https://i.imgur.com/QrE4jGf.png"; // robot PNG
+      el.appendChild(img);
+
+      const stats=document.createElement("div");
+      stats.className="stats";
+      el.appendChild(stats);
+
+      const taskIcon=document.createElement("div");
+      taskIcon.className="task-icon";
+      el.appendChild(taskIcon);
+
+      farm.appendChild(el);
+      robots[bot.robot_id]={el, stats, taskIcon};
+    }
+    const r=robots[bot.robot_id];
+    r.el.style.left=bot.x+"px";
+    r.el.style.top=bot.y+"px";
+    r.stats.innerHTML=`${bot.robot_id}<br>🔋 ${bot.battery}%<br>${bot.task}${bot.battery<20?' <span style="color:red;font-weight:bold;">Low Battery!</span>':''}`;
+    // Task icon
+    let icon="";
+    if(bot.task==="Fertilize") icon="🌱";
+    else if(bot.task==="Water") icon="💧";
+    else if(bot.task==="Soil Check") icon="🔬";
+    else if(bot.task==="Charging") icon="🔌";
+    r.taskIcon.innerHTML=icon;
+  });
+};
+</script>
+</body>
+</html>

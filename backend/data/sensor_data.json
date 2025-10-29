@@ -1,0 +1,18 @@
+[
+  {"robot_id": "AGB-01", "zone_id": "A1", "soil_moisture": 52.1, "temperature": 24.9, "humidity": 61.2, "battery_level": 93.4, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-02", "zone_id": "A2", "soil_moisture": 48.3, "temperature": 25.1, "humidity": 58.7, "battery_level": 90.2, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-03", "zone_id": "B1", "soil_moisture": 45.9, "temperature": 26.4, "humidity": 55.8, "battery_level": 75.3, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-04", "zone_id": "B2", "soil_moisture": 49.2, "temperature": 25.7, "humidity": 59.3, "battery_level": 84.5, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-05", "zone_id": "C1", "soil_moisture": 55.3, "temperature": 23.8, "humidity": 64.1, "battery_level": 88.0, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-06", "zone_id": "C2", "soil_moisture": 44.9, "temperature": 27.0, "humidity": 53.5, "battery_level": 70.6, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-07", "zone_id": "D1", "soil_moisture": 46.2, "temperature": 25.5, "humidity": 57.1, "battery_level": 91.8, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-08", "zone_id": "D2", "soil_moisture": 53.6, "temperature": 24.3, "humidity": 62.4, "battery_level": 95.0, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-09", "zone_id": "E1", "soil_moisture": 50.0, "temperature": 25.0, "humidity": 60.0, "battery_level": 98.0, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-10", "zone_id": "E2", "soil_moisture": 47.3, "temperature": 25.8, "humidity": 58.2, "battery_level": 79.1, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-11", "zone_id": "F1", "soil_moisture": 51.9, "temperature": 24.6, "humidity": 61.8, "battery_level": 87.5, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-12", "zone_id": "F2", "soil_moisture": 42.7, "temperature": 26.8, "humidity": 55.0, "battery_level": 65.0, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-13", "zone_id": "G1", "soil_moisture": 54.1, "temperature": 24.1, "humidity": 63.5, "battery_level": 92.4, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-14", "zone_id": "G2", "soil_moisture": 48.5, "temperature": 25.3, "humidity": 59.7, "battery_level": 80.2, "timestamp": "2025-10-28 21:50:00"},
+  {"robot_id": "AGB-15", "zone_id": "H1", "soil_moisture": 49.8, "temperature": 25.4, "humidity": 59.0, "battery_level": 86.3, "timestamp": "2025-10-28 21:50:00"}
+]
+

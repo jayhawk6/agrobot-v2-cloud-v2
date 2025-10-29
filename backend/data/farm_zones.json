@@ -1,0 +1,7 @@
+{
+  "zones": [
+    {"id": "Zone A", "crop": "Tomatoes", "health": "Good"},
+    {"id": "Zone B", "crop": "Cabbage", "health": "Fair"},
+    {"id": "Zone C", "crop": "Onions", "health": "Excellent"}
+  ]
+}
